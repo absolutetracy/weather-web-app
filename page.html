@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script type="text/javascript" src="./jquery.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./vue.min.js"></script>
+	<script type="text/javascript" src="./main.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./weather.css">
+
+</head>
+<body>
+	<div class="container">
+		<div id="background">
+			<img id="background-img" src="https://picsum.photos/200/300/?random">
+		</div>
+		<!-- <button type="button" class="btn btn-default">Btn1</button> -->
+		<div id="content">
+			<div id="city">{{cityName}}</div>
+			<div id="temperture">
+				<span id="temp-num">{{temperture}}</span>
+				<span id="unit">{{tempUnit}}</span>
+			</div>
+			<div>
+				<input v-model="cityName" type="radio" name="pop-city" value="beijing">北京
+				<input v-model="cityName" type="radio" name="pop-city" value="shanghai">上海
+				<input v-model="cityName" type="radio" name="pop-city" value="guangzhou">广州
+				<input v-model="cityName" type="radio" name="pop-city" value="shenzhen">深圳
+			</div>
+		</div>
+	</div>
+</body>
+</html>
