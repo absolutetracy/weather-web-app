@@ -21,12 +21,110 @@ $(document).ready(function(){
 
 	$("#background-img").attr("src", setBackground(dWidth, dHeight));
 
+
+	let $body = $("body");
+	let $cityEl = $("#city");
+	let $refreshBtn = $("#refreshBtn");
+
+
+	console.log($cityEl);
+
+	
+
+	// $cityEl.on("click", function() {
+	// 	console.log('clicked!');
+	// });
+
+	// $cityEl.hover(function() {
+	// 	console.log('on city');
+	// 	$refreshBtn.show();
+	// }, function() {
+	// 	console.log('off city');
+	// 	$refreshBtn.hide();
+	// });
+
+	// $cityEl.on("mouseout", function() {
+	// 	$refreshBtn.hide();
+	// });
+
 	let weather = new Vue({
 		el: "#content",
 		data: {
 			cityName: "Shenzhen",
-			temperture: 17,
-			tempUnit: "Celsius"
+			// temperture: 17,
+			tempUnit: "℃",
+			isRefreshBtnShow: false,
+			isRefreshing: false,
+			main: {
+				temp: 'N/A',
+			}
+		},
+		computed: {
+			city: function() {
+				return this.getChCityName(this.cityName);
+			},
+			temperture: function() {
+				return Number(this.main.temp - 273.15).toFixed(0);
+			}
+		},
+		methods: {
+			getChCityName: function(city) {
+				let EnCh = {"Shenzhen": "深圳","Shanghai": "上海", "Guangzhou": "广州", "Beijing": "北京"}
+				return EnCh[city];
+				
+			},
+			refresh: function() {
+				let that = this;
+
+				// 改变refresh按钮样子，增加转转转动画
+				$("#refreshBtn").removeClass("btn-default");
+				$("#refreshBtn").addClass("btn-link");
+				$("#refreshBtn").find("i").css("animation", "0.5s linear 0s normal none infinite rotate");
+
+
+				// 请求天气接口，获取最新天气数据
+				$.getJSON(
+			      "https://api.openweathermap.org/data/2.5/weather",
+			      {q: this.cityName, APPID: "951e78adf119e5ee5a19069e08ed8a1a"},
+			     //  function(data){
+			     //    let tempKelvin = data.main.temp;
+			     //    let tempCelsius = calculateTemp(tempKelvin);
+			     //    console.log(tempKelvin);
+			     //    $("#temp-number").text(tempCelsius);
+			     // }
+			     ).then(function(data) {
+			     	console.log(data);
+			     	that.main = data.main;
+			     	that.isRefreshBtnShow = false;
+			     });
+			}
 		}
 	});
+
+	weather.refresh();
+
+	$("#city").hover(function() {
+		// console.log('on');
+		weather.isRefreshBtnShow = true;
+	}, function() {
+		weather.isRefreshBtnShow = false;
+	});
+
+	// $body.on("mouseout", "#refreshBtn", function() {
+	// 	// console.log('out');
+	// 	weather.isRefreshBtnShow = false;
+	// });
+
+	// 使用vue事件响应，不用jquery事件响应
+	// $body.on("click", "#refreshBtn", function() {
+	// 	console.log("refreshBtn clicked");
+	// 	$("#refreshBtn").removeClass("btn-default");
+	// 	$("#refreshBtn").addClass("btn-link");
+	// 	$("#refreshBtn").find("i").css("animation", "0.5s linear 0s normal none infinite rotate");
+
+
+	// });
+
+
+
 });
