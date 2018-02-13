@@ -57,12 +57,31 @@ img#background-img {
 	z-index: 2;
 }
 
+#detail {
+	position: absolute;
+	left: 50%;
+	top: 95%;
+	z-index: 10;
+}
+
 #city {
 	font-size: 800%;
 }
 
 #temperture {
 	font-size: 400%;
+}
+
+#forecast-content {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 400px;
+	height: 300px;
+	margin: auto;
+
 }
 
 /*#refreshBtn {

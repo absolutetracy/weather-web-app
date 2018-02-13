@@ -19,7 +19,8 @@ $(document).ready(function(){
 		return tempUrl.replace("{width}", width).replace("{height}", height);
 	}
 
-	$("#background-img").attr("src", setBackground(dWidth, dHeight));
+	// 设置适合浏览窗口分辨率的图片
+	// $("#background-img").attr("src", setBackground(dWidth, dHeight));
 
 
 	let $body = $("body");
@@ -48,7 +49,7 @@ $(document).ready(function(){
 	// });
 
 	let weather = new Vue({
-		el: "#content",
+		el: "#weather",
 		data: {
 			cityName: "Shenzhen",
 			// temperture: 17,
@@ -66,6 +67,9 @@ $(document).ready(function(){
 			temperture: function() {
 				return Number(this.main.temp - 273.15).toFixed(0);
 			}
+			// page: function(val) {
+			// 	console.log(val);
+			// }
 		},
 		methods: {
 			getChCityName: function(city) {
@@ -76,6 +80,8 @@ $(document).ready(function(){
 			refresh: function() {
 				let that = this;
 
+				this.isRefreshing = true;
+
 				// 改变refresh按钮样子，增加转转转动画
 				$("#refreshBtn").removeClass("btn-default");
 				$("#refreshBtn").addClass("btn-link");
@@ -85,7 +91,7 @@ $(document).ready(function(){
 				// 请求天气接口，获取最新天气数据
 				$.getJSON(
 			      "https://api.openweathermap.org/data/2.5/weather",
-			      {q: this.cityName, APPID: "951e78adf119e5ee5a19069e08ed8a1a"},
+			      {q: this.cityName, APPID: "951e78adf119e5ee5a19069e08ed8a1a"}
 			     //  function(data){
 			     //    let tempKelvin = data.main.temp;
 			     //    let tempCelsius = calculateTemp(tempKelvin);
@@ -96,7 +102,12 @@ $(document).ready(function(){
 			     	console.log(data);
 			     	that.main = data.main;
 			     	that.isRefreshBtnShow = false;
+			     	that.isRefreshing = false;
 			     });
+			},
+			toForecast: function() {
+				console.log('Down click');
+				// console.log(val);
 			}
 		}
 	});
@@ -107,7 +118,9 @@ $(document).ready(function(){
 		// console.log('on');
 		weather.isRefreshBtnShow = true;
 	}, function() {
-		weather.isRefreshBtnShow = false;
+		if(!weather.isRefreshing) {
+            weather.isRefreshBtnShow = false;
+		}
 	});
 
 	// $body.on("mouseout", "#refreshBtn", function() {
