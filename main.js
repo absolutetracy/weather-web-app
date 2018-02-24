@@ -58,6 +58,9 @@ $(document).ready(function(){
 			isRefreshing: false,
 			main: {
 				temp: 'N/A',
+			},
+			forecast: {
+				list: []
 			}
 		},
 		computed: {
@@ -108,6 +111,17 @@ $(document).ready(function(){
 			toForecast: function() {
 				console.log('Down click');
 				// console.log(val);
+
+				let that = this;
+
+				$.getJSON(
+					"https://api.openweathermap.org/data/2.5/forecast",
+					{q: this.cityName, APPID: "951e78adf119e5ee5a19069e08ed8a1a"}
+				).then(function(data) {
+					console.log(data);
+					// 获取最新预报数据
+					that.forecast = data;
+				});
 			}
 		}
 	});

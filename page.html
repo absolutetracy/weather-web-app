@@ -49,16 +49,16 @@
 
 			</div>
 			<div id="forecast-content" class="well">
-				<div>
+				<div v-for="item in forecast.list" class="forecast-item">
 					<div class="forecast-icon">
 						<span><i class="wi wi-day-sunny-overcast"></i></span>
 					</div>
 					<div class="forecast-temp">
-						<span>21</span>
+						<span><!-- 21 -->{{item.main.temp}}</span>
 						<span><i class="wi wi-celsius"></i></span>
 					</div>
 					<div class="forecast-time">
-						<span>2018-2-15</span>
+						<span><!-- 2018-2-15 -->{{item.dt_txt}}</span>
 						<span><i class="wi wi-time-6"></i></span>
 					</div>
 				</div>

@@ -79,9 +79,22 @@ img#background-img {
 	top: 0;
 	bottom: 0;
 	width: 400px;
-	height: 300px;
+	height: 600px;
 	margin: auto;
+	transform: rotate(-90deg) translateY(-400px);
+	transform-origin: right top;
+	overflow-x: hidden;
+	overflow-y: auto;
 
+}
+
+.forecast-item {
+	/*display: inline;*/
+	width: 60px;
+	/*height: 400px;*/
+	transform: rotate(90deg);
+	transform-origin: right top;
+	
 }
 
 /*#refreshBtn {
